@@ -12,6 +12,8 @@ jobs:
     name: Checkout
     runs-on: ubuntu-18.04
     steps:
+      - name: Start Tracee
+        uses: aquasecurity/tracee-action@v0.3.0-start
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Login to DockerHub
@@ -19,7 +21,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: Run Aqua scanner
+      - name: Aqua code scanning(SCA,IaC and SAST)
         uses: docker://aquasec/aqua-scanner
         with:
           args: trivy fs --security-checks config,vuln,secret --sast .
@@ -31,19 +33,7 @@ jobs:
           AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
           GITHUB_TOKEN: ${{ github.token }}
           TRIVY_RUN_AS_PLUGIN: 'aqua'
-      #- name: Run Trivy vulnerability scanner - FS mode
-        #uses: aquasecurity/trivy-action@0.5.1
-        #with:
-          #scan-type: 'fs'
-          #security-checks: 'vuln,config,secret'
-          #hide-progress: false
-          #format: 'table'
-        #env:
-          #AQUA_KEY: ${{ secrets.AQUA_KEY }}
-          #AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
-          #TRIVY_RUN_AS_PLUGIN: 'aqua'
-          #TRIGGERED_BY: 'PUSH'
-          #GITHUB_TOKEN: ${{ github.token }}
+      
       # Runs docker build 
       - name: Build docker image
         run: sudo docker build -t aquasaemea/insecure-bank-app:${{ github.sha }} .
@@ -53,27 +43,21 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: registry.aquasec.com
-          username: ${{ secrets.AQUADEV_USERNAME }}
-          password: ${{ secrets.AQUADEV_PASS }}
-          
-      #- name: Build and push
-        #uses: docker/build-push-action@v3
-        #with:
-          #push: true
-          #tags: "aquasaemea/insecure-bank-app:${{ github.sha }}"
-          
+          username: ${{ secrets.AQUA_REGISTRY_USERNAME }}
+          password: ${{ secrets.AQUA_REGISTRY_PASS }}
+      
       # Scan the Image
-      - name: Run the scanner 
+      - name: Image scanning
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:2022.4 scan --host ${{ secrets.AQUA_HOST }} --local aquasaemea/insecure-bank-app:${{ github.sha }} --token ${{ secrets.AQUA_TOKEN }} --layer-vulnerabilities --no-verify --html > .github/workflows/scan-output.html
-      
-      # Runs docker push 
-      - name: Build docker image
-        run: sudo docker push aquasupportemea/insecure-bank-app:${{ github.sha }} . 
-      
+          
+     # Runs docker push 
+      - name: Docker Image Push
+        run: sudo docker push aquasaemea/insecure-bank-app:${{ github.sha }} .   
+          
       - name: SBOM Generation
         run: |
-          #export BILLY_SERVER=https://billy.codesec.aquasec.com
+          export BILLY_SERVER=https://billy.codesec.aquasec.com
           curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
           curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
           if ! cat install.sh.checksum | sha256sum ; then
@@ -87,17 +71,11 @@ jobs:
             --aqua-key "${{ secrets.AQUA_KEY }}" \
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --artifact-path "aquasaemea/insecure-bank-app:${{ github.sha }}"
-            
+
             # The docker image name:tag of the newly built image
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
             # OR the path to the root folder of your project. I.e my-repo/my-app 
-            # --artifact-path "${{env.MY_APP_ROOT}}"
-      #- name: Manifest Generation
-        #run: |
-          #docker image ls
-          #curl -L ${{ secrets.BILLY_URL }}/v1/api/download/sh | sh
-          #billy generate \
-             #--access-token "${{ secrets.GITHUB_TOKEN }}" \
-             #--aqua-key "${{ secrets.AQUA_KEY }}" \
-             #--aqua-secret "${{ secrets.AQUA_SECRET }}" \
-             #--artifact-path "aquasaemea/insecure-bank-app:${{ github.sha }}"
+            ## --artifact-path "${{env.MY_APP_ROOT}}"
+             
+      - name: Stop Tracee
+        uses: aquasecurity/tracee-action@v0.3.0-stop
