@@ -10,7 +10,7 @@ on:
 jobs:
   checkout:
     name: Checkout
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Start Tracee
         uses: aquasecurity/tracee-action@v0.3.0-start
