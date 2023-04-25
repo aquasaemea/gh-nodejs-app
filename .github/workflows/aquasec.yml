@@ -59,7 +59,9 @@ jobs:
      
      # Runs docker push 
       - name: Docker Image Push
-        run: sudo docker push andresguisado/insecure-bank-app:${{ github.sha }}  
+        run: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+          docker push andresguisado/insecure-bank-app:${{ github.sha }}  
      
      # Generate SBOM
       - name: SBOM Generation
