@@ -12,10 +12,13 @@ jobs:
     name: Checkout
     runs-on: ubuntu-20.04
     steps:
-      - name: Start Tracee
-        uses: aquasecurity/tracee-action@v0.3.0-start
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Setup pipeline enforcer
+        uses: aquasecurity/pipeline-enforcer-action@v1.0.0
+        with:
+          aqua-key: ${{ secrets.AQUA_KEY }}
+          aqua-secret: ${{ secrets.AQUA_SECRET }}
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
