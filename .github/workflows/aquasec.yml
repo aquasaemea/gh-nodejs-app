@@ -77,7 +77,7 @@ jobs:
             --access-token "${{ github.token }}" \
             --aqua-key "${{ secrets.AQUA_KEY }}" \
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
-            --artifact-path "aquasaemea/insecure-bank-app:${{ github.sha }}"
+            --artifact-path "andresguisado/insecure-bank-app:${{ github.sha }}"
 
             # The docker image name:tag of the newly built image
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
