@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insecure-bank
+  namespace: andres
+  labels:
+    app: insecure-bank
+    env: dev
+spec:
+  selector:
+    matchLabels:
+      app: insecure-bank
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 1
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: insecure-bank
+    spec:
+      containers:
+      - name: insecure-bank
+        image: docker.io/andresguisado/insecure-bank
+        ports:
+        - name: http
+          containerPort: 3000
+#        livenessProbe:
+#          httpGet:
+#            path: /index.html
+#            port: 3000
+#            scheme: HTTP
+#          initialDelaySeconds: 2
+#          periodSeconds: 5
+#          timeoutSeconds: 2
+#        readinessProbe:
+#          exec:
+#            command:
+#            - /bin/ls 
+#            - /tmp/ready
+#          initialDelaySeconds: 2
+#          timeoutSeconds: 1
+#        resources:
+#          limits:
+#            memory: "64Mi"
+#            cpu: "500m"
+#          requests:
+#            memory: "32Mi"
+#            cpu: "250m"
