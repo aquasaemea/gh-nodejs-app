@@ -27,6 +27,8 @@ spec:
         ports:
         - name: http
           containerPort: 3000
+      imagePullSecrets:
+      - name: github-aquasaemea-dockerhub
 #        livenessProbe:
 #          httpGet:
 #            path: /index.html
