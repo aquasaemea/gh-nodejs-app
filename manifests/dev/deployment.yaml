@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: insecure-bank
-  namespace: andres
+  name: insecure-bank-andres
+  namespace: ag-dev
   labels:
-    app: insecure-bank
-    env: dev
+    app: insecure-bank-andres
+    env: ag-dev
 spec:
   selector:
     matchLabels:
-      app: insecure-bank
+      app: insecure-bank-andres
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,11 +19,11 @@ spec:
   template:
     metadata:
       labels:
-        app: insecure-bank
+        app: insecure-bank-andres
     spec:
       containers:
       - name: insecure-bank
-        image: docker.io/andresguisado/insecure-bank
+        image: docker.io/aquasaemea/insecure-bank-andres:latest
         ports:
         - name: http
           containerPort: 3000
