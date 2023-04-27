@@ -9,7 +9,6 @@ on:
       # comment
 jobs:
   CI-Build:
-    name: Checkout
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
