@@ -135,8 +135,9 @@ jobs:
        uses: azure/k8s-set-context@v3
        with:
           method: service-account
-          k8s-url: https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443
+          k8s-url: "https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443"
           k8s-secret: ${{ secrets.K8S_SECRET }}
+          token: ${{ secrets.K8S_TOKEN }}
           
      - name: Checkout code
        uses: actions/checkout@v2
