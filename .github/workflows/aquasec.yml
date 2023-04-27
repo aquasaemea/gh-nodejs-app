@@ -119,6 +119,7 @@ jobs:
             ## --artifact-path "${{env.MY_APP_ROOT}}"
             
   CD-Deploy_to_dev:
+    #if: github.ref == 'refs/heads/development'
     needs: CI-Build
     runs-on: ubuntu-20.04
     steps:   
@@ -152,6 +153,7 @@ jobs:
             aquasaemea/insecure-bank-andres:${{ github.sha }}
             
   CD-Deploy_to_stagging:
+    #if: github.ref == 'refs/heads/stagging'
     needs: CD-Deploy_to_dev
     runs-on: ubuntu-20.04
     steps:   
@@ -184,3 +186,4 @@ jobs:
             aquasaemea/insecure-bank-andres:${{ github.sha }}
             
 #https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions
+#https://nicwortel.nl/blog/2020/simple-kubernetes-deployment-versioning
