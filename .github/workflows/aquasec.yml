@@ -41,6 +41,7 @@ jobs:
       - name: Build and push the Docker image
         uses: docker/build-push-action@v4
         with:
+          context: .
           tags: |
             aquasaemea/insecure-bank-andres:latest
             aquasaemea/insecure-bank-andres:${{ github.sha }}
@@ -69,6 +70,7 @@ jobs:
       - name: Build and push the Docker image
         uses: docker/build-push-action@v4
         with:
+          context: .
           push: true
           tags: |
             aquasaemea/insecure-bank-andres:latest
@@ -113,6 +115,7 @@ jobs:
           aqua-key: ${{ secrets.AQUA_KEY }}
           aqua-secret: ${{ secrets.AQUA_SECRET }}
           
+     #https://github.com/marketplace/actions/kubernetes-set-context     
      - name: Setting K8s context
        uses: azure/k8s-set-context@v3
        with:
@@ -128,8 +131,8 @@ jobs:
        with:
           namespace: ag-dev
           manifests: |
-            kubernetes/deployment.yaml
-            kubernetes/service.yaml
+            manifests/dev/deployment.yaml
+            manifests/dev/service.yaml
           #kubernetes/ingress.yaml
           images: |
             aquasaemea/insecure-bank-andres:${{ github.sha }}
@@ -159,8 +162,8 @@ jobs:
        with:
           namespace: ag-stag
           manifests: |
-            kubernetes/deployment.yaml
-            kubernetes/service.yaml
+            manifests/dev/deployment.yaml
+            manifests/dev/service.yaml
           #kubernetes/ingress.yaml
           images: |
             aquasaemea/insecure-bank-andres:${{ github.sha }}
