@@ -56,7 +56,6 @@ jobs:
       - name: Build and push the Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
           tags: |
             aquasaemea/insecure-bank-andres:latest
             aquasaemea/insecure-bank-andres:${{ github.sha }}
@@ -85,13 +84,12 @@ jobs:
       - name: Build and push the Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
           push: true
           tags: |
             aquasaemea/insecure-bank-andres:latest
             aquasaemea/insecure-bank-andres:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          #cache-from: type=gha
+          #cache-to: type=gha,mode=max
           
       #- name: Docker Login & Push
       #  run: |
