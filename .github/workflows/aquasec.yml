@@ -75,7 +75,7 @@ jobs:
           
       - name: Build image container
         run: |
-          sudo docker build -t aquasaemea/insecure-bank-andres:${{ github.sha }} .
+          sudo docker build -t $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG .
         
       - name: Login to Aqua Registry
         uses: docker/login-action@v1
