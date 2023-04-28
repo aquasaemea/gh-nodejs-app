@@ -97,7 +97,7 @@ jobs:
           
       - name: Docker Login & Push
         run: |
-          echo "${{ secrets.secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG 
           docker tag $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG $DOCKER_REPOSITORY/$IMAGE_NAME:latest
           docker $DOCKER_REPOSITORY/$IMAGE_NAME:latest 
