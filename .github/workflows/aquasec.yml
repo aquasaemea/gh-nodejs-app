@@ -157,7 +157,7 @@ jobs:
               manifests/dev/service.yaml
           #kubernetes/ingress.yaml
            images: |
-              $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+              docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
               
       #- name: Deploying to Dev
       #  run: |
