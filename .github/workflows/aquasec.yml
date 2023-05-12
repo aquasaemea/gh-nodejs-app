@@ -156,8 +156,8 @@ jobs:
               manifests/dev/deployment.yaml
               manifests/dev/service.yaml
           #kubernetes/ingress.yaml
-           images: |
-              docker.io/aquasaemea/insecure-bank-andres:90
+           images: 'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG'
+          #docker.io/aquasaemea/insecure-bank-andres:90
           #docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
               
       #- name: Deploying to Dev
