@@ -130,34 +130,65 @@ jobs:
     needs: CI-Build
     runs-on: ubuntu-20.04
     steps:   
-    
-     - name: Setup pipeline enforcer
-       uses: aquasecurity/pipeline-enforcer-action@v1.0.0
-       with:
-          aqua-key: ${{ secrets.AQUA_KEY }}
-          aqua-secret: ${{ secrets.AQUA_SECRET }}
+      - name: Setup pipeline enforcer
+        uses: aquasecurity/pipeline-enforcer-action@v1.0.0
+        with:
+           aqua-key: ${{ secrets.AQUA_KEY }}
+           aqua-secret: ${{ secrets.AQUA_SECRET }}
+           
+      - name: Checkout code
+        uses: actions/checkout@v2
+     
+      - name: Setting K8s context
+        uses: azure/k8s-set-context@v3
+        with:
+           method: kubeconfig
+           kubeconfig: ${{ secrets.KUBECONFIG_ANDRES }}
+           context: emea-aguisado-test
+      
+      - name: Deploying to Dev
+        uses: azure/k8s-deploy@v4 
+        with:
+           namespace: ag-dev
+           manifests: |
+              manifests/dev/deployment.yaml
+              manifests/dev/service.yaml
+              #kubernetes/ingress.yaml
+           images: |
+              $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+              
+      #- name: Deploying to Dev
+      #  run: |
+      #    kubectl config set-cluster emea-aguisado-aks01 --server="${K8S_SERVER}"
+      #    kubectl config set clusters.emea-aguisado-aks01.certificate-authority-data ${K8S_CERTIFICATE_AUTHORITY_DATA}
+      #    kubectl config set-credentials clusterAdmin_emea-uk-aguisado-01_emea-aguisado-aks01 --token="${K8S_TOKEN}"
+      #    kubectl config set-context default --cluster=emea-aguisado-aks01 --user=clusterAdmin_emea-uk-aguisado-01_emea-aguisado-aks01
+      #    kubectl config use-context default
+      #    kubectl apply -f manifests/dev/deployment.yaml
+      #    kubectl apply -f manifests/dev/service.yaml
+        #- sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" deployment.yaml
+         
           
      #https://github.com/marketplace/actions/kubernetes-set-context     
-     - name: Setting K8s context
-       uses: azure/k8s-set-context@v2
-       with:
-          method: service-account
-          k8s-url: https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443
-          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
-          
-     - name: Checkout code
-       uses: actions/checkout@v2
+     #- name: Setting K8s context
+     #  uses: azure/k8s-set-context@v3
+     #  with:
+     #     method: service-account
+     #     k8s-url: https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443
+     #     k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
        
-     - name: Deploying to Dev
-       uses: azure/k8s-deploy@v4 
-       with:
-          namespace: ag-dev
-          manifests: |
-            manifests/dev/deployment.yaml
-            manifests/dev/service.yaml
-          #kubernetes/ingress.yaml
-          images: |
-            $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+       
+     
+     #- name: Deploying to Dev
+     #  uses: azure/k8s-deploy@v4 
+     #  with:
+     #     namespace: ag-dev
+     #    manifests: |
+     #    manifests/dev/deployment.yaml
+     #     manifests/dev/service.yaml
+     #     #kubernetes/ingress.yaml
+     #     images: |
+     #      $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
             
   CD-Deploy_to_stagging:
     #if: github.ref == 'refs/heads/stagging'
