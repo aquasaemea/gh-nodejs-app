@@ -153,7 +153,7 @@ jobs:
            manifests: |
               manifests/dev/deployment.yaml
               manifests/dev/service.yaml
-              #kubernetes/ingress.yaml
+          #kubernetes/ingress.yaml
            images: |
               $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
               
@@ -201,27 +201,27 @@ jobs:
        with:
           aqua-key: ${{ secrets.AQUA_KEY }}
           aqua-secret: ${{ secrets.AQUA_SECRET }}
-          
-     - name: Setting K8s context
-       uses: azure/k8s-set-context@v3 
-       with:
-          method: service-account
-          k8s-url: https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443
-          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
-          
+           
      - name: Checkout code
        uses: actions/checkout@v2
-       
-     - name: Deploying to stagging
-       uses: azure/k8s-deploy@v4 
+     
+     - name: Setting K8s context
+       uses: azure/k8s-set-context@v3
        with:
-          namespace: ag-stag
-          manifests: |
-            manifests/dev/deployment.yaml
-            manifests/dev/service.yaml
-          #kubernetes/ingress.yaml
-          images: |
-            $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG_ANDRES }}
+          context: emea-aguisado-test
+       
+     #- name: Deploying to stagging
+     #  uses: azure/k8s-deploy@v4 
+     #  with:
+     #     namespace: ag-stag
+     #     manifests: |
+     #        manifests/stag/deployment.yaml
+     #        manifests/stag/service.yaml
+     #     #kubernetes/ingress.yaml
+     #    images: |
+     #        $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
             
 #https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions
 #https://nicwortel.nl/blog/2020/simple-kubernetes-deployment-versioning
