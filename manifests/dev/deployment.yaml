@@ -22,7 +22,7 @@ spec:
         app: insecure-bank-andres
     spec:
       containers:
-      - name: insecure-bank
+      - name: insecure-bank-andres
         image: docker.io/aquasaemea/insecure-bank-andres:latest
         ports:
         - name: http
