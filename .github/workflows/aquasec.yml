@@ -129,16 +129,18 @@ jobs:
     #if: github.ref == 'refs/heads/development'
     needs: CI-Build
     runs-on: ubuntu-20.04
-    steps:   
+    
+    steps: 
+    
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: Setup pipeline enforcer
         uses: aquasecurity/pipeline-enforcer-action@v1.0.0
         with:
           aqua-key: ${{ secrets.AQUA_KEY }}
           aqua-secret: ${{ secrets.AQUA_SECRET }}
-           
-      - name: Checkout code
-        uses: actions/checkout@v2
-     
+         
       - name: Setting K8s context
         uses: azure/k8s-set-context@v3
         with:
@@ -176,7 +178,6 @@ jobs:
      #     method: service-account
      #     k8s-url: https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443
      #     k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
-       
        
      
      #- name: Deploying to Dev
