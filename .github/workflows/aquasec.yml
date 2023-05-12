@@ -152,11 +152,14 @@ jobs:
         uses: azure/k8s-deploy@v4 
         with:
            namespace: ag-dev
+           images: 'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG'
            manifests: |
               manifests/dev/deployment.yaml
               manifests/dev/service.yaml
           #kubernetes/ingress.yaml
-           images: 'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG'
+          #'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:${{ github.run_number }}'
+          #docker.io/aquasaemea/insecure-bank-andres:${{ github.run_number }}
+          #docker.io/aquasaemea/insecure-bank-andres:latest
           #docker.io/aquasaemea/insecure-bank-andres:90
           #docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
               
