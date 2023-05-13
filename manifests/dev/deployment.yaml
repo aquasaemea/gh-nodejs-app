@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: insecure-bank-andres
-        image: docker.io/aquasaemea/insecure-bank-andres:latest
+        image: docker.io/aquasaemea/insecure-bank-andres:61
         imagePullPolicy: Always
         ports:
         - name: http
