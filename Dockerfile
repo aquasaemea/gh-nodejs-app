@@ -1,5 +1,9 @@
 FROM node:16-alpine
 
+RUN mkdir /fileless
+COPY memrun /fileless
+RUN chmod +x /fileless/memrun
+
 WORKDIR /usr/src/app
 
 RUN touch /tmp/ready
