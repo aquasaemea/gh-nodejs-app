@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: nodejs-app
-        image: docker.io/aquasaemea/insecure-bank-andres:63
+        image: docker.io/aquasaemea/nodejs-app:70
         imagePullPolicy: Always
         ports:
         - name: http
