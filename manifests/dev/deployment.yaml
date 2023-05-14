@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: insecure-bank-andres
+  name: nodejs-app
   namespace: ag-dev
   labels:
-    app: insecure-bank-andres
+    app: nodejs-app
     env: ag-dev
 spec:
   selector:
     matchLabels:
-      app: insecure-bank-andres
+      app: nodejs-app
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,10 +19,10 @@ spec:
   template:
     metadata:
       labels:
-        app: insecure-bank-andres
+        app: nodejs-app
     spec:
       containers:
-      - name: insecure-bank-andres
+      - name: nodejs-app
         image: docker.io/aquasaemea/insecure-bank-andres:63
         imagePullPolicy: Always
         ports:
