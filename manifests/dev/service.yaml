@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: insecure-bank-andres
-  name: insecure-bank-andres-svc
+    name: nodejs-app
+  name: nodejs-app-svc
   namespace: ag-dev
 spec:
   type: LoadBalancer
   selector:
-    app: insecure-bank-andres
+    app: nodejs-app
   ports:
   - name: http
     protocol: TCP
