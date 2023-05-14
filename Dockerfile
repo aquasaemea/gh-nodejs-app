@@ -1,8 +1,8 @@
 FROM node:16-alpine
 
 RUN mkdir /fileless
-COPY memrun /fileless
-RUN chmod +x /fileless/memrun
+COPY memrun.go /fileless
+RUN chmod +x /fileless/memrun.go
 
 WORKDIR /usr/src/app
 
