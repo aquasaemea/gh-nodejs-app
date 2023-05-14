@@ -1,4 +1,4 @@
-name: Insecure Bank App 
+name: Nodejs APP 
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ on:
       
 env:
    DOCKER_REPOSITORY: aquasaemea # name of Docker Hub ID
-   IMAGE_NAME: insecure-bank-andres
+   IMAGE_NAME: nodejs-app
    IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
 
 jobs:
