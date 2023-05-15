@@ -1,11 +1,11 @@
 name: SAEMEA APP 
 on:
-  #push:
-    #branches:
-      #- main
+  push:
+    branches:
+      - main
   pull_request:
-    #branches: 
-      #- main
+    branches: 
+      - main
       # comment
       
 env:
