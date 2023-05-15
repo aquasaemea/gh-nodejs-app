@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-app
+  name: saemea-app
   namespace: ag-dev
   labels:
-    app: nodejs-app
+    app: saemea-app
     env: ag-dev
 spec:
   selector:
     matchLabels:
-      app: nodejs-app
+      app: saemea-app
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,11 +19,11 @@ spec:
   template:
     metadata:
       labels:
-        app: nodejs-app
+        app: saemea-app
     spec:
       containers:
-      - name: nodejs-app
-        image: docker.io/aquasaemea/nodejs-app:73
+      - name: saemea-app
+        image: docker.io/aquasaemea/saemea-app:1
         imagePullPolicy: Always
         ports:
         - name: http
