@@ -1,16 +1,16 @@
-name: Nodejs APP 
+name: SAEMEA APP 
 on:
   push:
-    branches:
-      - main
+    #branches:
+      #- main
   pull_request:
-    branches: 
-      - main
+    #branches: 
+      #- main
       # comment
       
 env:
    DOCKER_REPOSITORY: aquasaemea # name of Docker Hub ID
-   IMAGE_NAME: nodejs-app
+   IMAGE_NAME: saemea-app
    IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
 
 jobs:
