@@ -2,10 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: saemea-app
-  namespace: ag-dev
+  namespace: dev
   labels:
     app: saemea-app
-    env: ag-dev
+    env: dev
 spec:
   selector:
     matchLabels:
