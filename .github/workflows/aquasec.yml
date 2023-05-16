@@ -151,7 +151,7 @@ jobs:
       - name: Deploying to Dev
         uses: azure/k8s-deploy@v4 
         with:
-           namespace: ag-dev
+           namespace: dev
            images: 'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG'
            manifests: |
               manifests/dev/deployment.yaml
@@ -221,7 +221,7 @@ jobs:
      #- name: Deploying to stagging
      #  uses: azure/k8s-deploy@v4 
      #  with:
-     #     namespace: ag-stag
+     #     namespace: stag
      #     manifests: |
      #        manifests/stag/deployment.yaml
      #        manifests/stag/service.yaml
