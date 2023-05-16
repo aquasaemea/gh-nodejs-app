@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: saemea-app
-        image: docker.io/aquasaemea/saemea-app:10
+        image: docker.io/aquasaemea/saemea-app:11
         imagePullPolicy: Always
         ports:
         - name: http
