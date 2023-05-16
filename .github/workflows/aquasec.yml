@@ -49,11 +49,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      #- name: Setup pipeline enforcer
-      #  uses: aquasecurity/pipeline-enforcer-action@v1.0.0
-      #  with:
-      #    aqua-key: ${{ secrets.AQUA_KEY }}
-      #    aqua-secret: ${{ secrets.AQUA_SECRET }}
+      - name: Setup pipeline enforcer
+        uses: aquasecurity/pipeline-enforcer-action@main
+        with:
+          aqua-key: ${{ secrets.AQUA_KEY }}
+          aqua-secret: ${{ secrets.AQUA_SECRET }}
   
       - name: Build application
         run: echo Application has been succesfully built 
@@ -135,11 +135,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      #- name: Setup pipeline enforcer
-      #  uses: aquasecurity/pipeline-enforcer-action@v1.0.0
-      #  with:
-      #    aqua-key: ${{ secrets.AQUA_KEY }}
-      #    aqua-secret: ${{ secrets.AQUA_SECRET }}
+      - name: Setup pipeline enforcer
+        uses: aquasecurity/pipeline-enforcer-action@main
+        with:
+          aqua-key: ${{ secrets.AQUA_KEY }}
+          aqua-secret: ${{ secrets.AQUA_SECRET }}
          
       - name: Setting K8s context
         uses: azure/k8s-set-context@v3
@@ -205,11 +205,11 @@ jobs:
      - name: Checkout code
        uses: actions/checkout@v2
        
-     #- name: Setup pipeline enforcer
-     #  uses: aquasecurity/pipeline-enforcer-action@v1.0.0
-     #  with:
-     #     aqua-key: ${{ secrets.AQUA_KEY }}
-     #     aqua-secret: ${{ secrets.AQUA_SECRET }}
+     - name: Setup pipeline enforcer
+       uses: aquasecurity/pipeline-enforcer-action@main
+       with:
+          aqua-key: ${{ secrets.AQUA_KEY }}
+          aqua-secret: ${{ secrets.AQUA_SECRET }}
      
      - name: Setting K8s context
        uses: azure/k8s-set-context@v3
