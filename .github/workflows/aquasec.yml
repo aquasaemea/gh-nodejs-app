@@ -1,8 +1,8 @@
 name: SAEMEA APP 
 on:
-  #push:
-    #branches:
-      #- main
+  push:
+    branches:
+      - main
   pull_request:
     branches: 
       - main
@@ -162,7 +162,7 @@ jobs:
              manifests/dev/service.yaml
           images: |
             "docker.io/aquasaemea/saemea-app:${{ github.run_number }}"
-             
+            
       #- name: Deploying to Dev
       #  uses: azure/k8s-deploy@v4 
       #  with:
