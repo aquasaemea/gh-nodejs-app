@@ -153,15 +153,24 @@ jobs:
       #    export CONTAINER_IMAGE= "docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
       #    sed -e "s#{{ CONTAINER_IMAGE }}#$CONTAINER_IMAGE#g" "./manifests/dev/deployment.yaml" |
       #    kubectl apply -f -
-        
+      
       - name: Deploying to Dev
-        uses: azure/k8s-deploy@v4 
+        uses: Azure/k8s-artifact-substitute@v1
         with:
-           namespace: dev
-           images: 'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG'
-           manifests: |
-              manifests/dev/deployment.yaml
-              manifests/dev/service.yaml
+          manifests: |
+             manifests/dev/deployment.yaml
+             manifests/dev/service.yaml
+          images: |
+            "docker.io/aquasaemea/saemea-app:${{ github.run_number }}"
+             
+      #- name: Deploying to Dev
+      #  uses: azure/k8s-deploy@v4 
+      #  with:
+      #     namespace: dev
+      #     images: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}' 
+      #     manifests: |
+      #        manifests/dev/deployment.yaml
+      #        manifests/dev/service.yaml
           #kubernetes/ingress.yaml
           #'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:${{ github.run_number }}'
           #docker.io/aquasaemea/insecure-bank-andres:${{ github.run_number }}
