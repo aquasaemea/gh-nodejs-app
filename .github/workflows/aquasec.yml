@@ -147,7 +147,13 @@ jobs:
            method: kubeconfig
            kubeconfig: ${{ secrets.KUBECONFIG_ANDRES }}
            context: emea-aguisado-test
-      
+           
+      #- name: Deploying to Dev
+      #  run: |
+      #    export CONTAINER_IMAGE= "docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
+      #    sed -e "s#{{ CONTAINER_IMAGE }}#$CONTAINER_IMAGE#g" "./manifests/dev/deployment.yaml" |
+      #    kubectl apply -f -
+        
       - name: Deploying to Dev
         uses: azure/k8s-deploy@v4 
         with:
