@@ -239,5 +239,5 @@ jobs:
      #    images: |
      #        $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
             
-##https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions
+#https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions
 #https://nicwortel.nl/blog/2020/simple-kubernetes-deployment-versioning
