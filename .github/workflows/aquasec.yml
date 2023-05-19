@@ -154,14 +154,14 @@ jobs:
       #    sed -e "s#{{ CONTAINER_IMAGE }}#$CONTAINER_IMAGE#g" "./manifests/dev/deployment.yaml" |
       #    kubectl apply -f -
       
-      - name: Deploying to Dev
-        uses: Azure/k8s-artifact-substitute@v1
-        with:
-          manifests: |
-             manifests/dev/deployment.yaml
-             manifests/dev/service.yaml
-          images: |
-            "docker.io/aquasaemea/saemea-app:${{ github.run_number }}"
+      #- name: Deploying to Dev
+      #  uses: Azure/k8s-artifact-substitute@v1
+      #  with:
+      #    manifests: |
+      #       manifests/dev/deployment.yaml
+      #       manifests/dev/service.yaml
+      #    images: |
+      #      "docker.io/aquasaemea/saemea-app:${{ github.run_number }}"
             
       #- name: Deploying to Dev
       #  uses: azure/k8s-deploy@v4 
@@ -178,17 +178,19 @@ jobs:
           #docker.io/aquasaemea/insecure-bank-andres:90
           #docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
               
-      #- name: Deploying to Dev
-      #  run: |
+      - name: Deploying to Dev
+        run: |
+          export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
+          sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
+          kubectl apply -f 
+          kubectl apply -f manifests/dev/service.yaml
       #    kubectl config set-cluster emea-aguisado-aks01 --server="${K8S_SERVER}"
       #    kubectl config set clusters.emea-aguisado-aks01.certificate-authority-data ${K8S_CERTIFICATE_AUTHORITY_DATA}
       #    kubectl config set-credentials clusterAdmin_emea-uk-aguisado-01_emea-aguisado-aks01 --token="${K8S_TOKEN}"
       #    kubectl config set-context default --cluster=emea-aguisado-aks01 --user=clusterAdmin_emea-uk-aguisado-01_emea-aguisado-aks01
       #    kubectl config use-context default
-      #    kubectl apply -f manifests/dev/deployment.yaml
-      #    kubectl apply -f manifests/dev/service.yaml
-        #- sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" deployment.yaml
-         
+      #    
+      #- sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" deployment.yaml
           
      #https://github.com/marketplace/actions/kubernetes-set-context     
      #- name: Setting K8s context
