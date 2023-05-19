@@ -1,8 +1,9 @@
 FROM node:16-alpine
 
-RUN mkdir /fileless
-COPY memrun.go /fileless
-RUN chmod +x /fileless/memrun.go
+RUN mkdir /sensitive_data
+COPY iac-secrets.tf /sensitive_data
+RUN mkdir /misconfiguration
+COPY insecure-db.tf /misconfiguration
 
 WORKDIR /usr/src/app
 
