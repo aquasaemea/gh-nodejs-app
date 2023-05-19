@@ -147,13 +147,15 @@ jobs:
            method: kubeconfig
            kubeconfig: ${{ secrets.KUBECONFIG_ANDRES }}
            context: emea-aguisado-test
-           
-      #- name: Deploying to Dev
-      #  run: |
-      #    export CONTAINER_IMAGE= "docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
-      #    sed -e "s#{{ CONTAINER_IMAGE }}#$CONTAINER_IMAGE#g" "./manifests/dev/deployment.yaml" |
-      #    kubectl apply -f -
+              
+      - name: Deploying to Dev
+        run: |
+          export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
+          sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
+          kubectl apply -f -
+          kubectl apply -f ./manifests/dev/service.yaml
       
+      #### TESTING ############
       #- name: Deploying to Dev
       #  uses: Azure/k8s-artifact-substitute@v1
       #  with:
@@ -176,15 +178,7 @@ jobs:
           #docker.io/aquasaemea/insecure-bank-andres:${{ github.run_number }}
           #docker.io/aquasaemea/insecure-bank-andres:latest
           #docker.io/aquasaemea/insecure-bank-andres:90
-          #docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
-              
-      - name: Deploying to Dev
-        run: |
-          export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
-          sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
-          kubectl apply -f -
-          kubectl apply -f ./manifests/dev/service.yaml
-          
+          #docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG  
      #https://github.com/marketplace/actions/kubernetes-set-context     
      #- name: Setting K8s context
      #  uses: azure/k8s-set-context@v3
@@ -192,18 +186,7 @@ jobs:
      #     method: service-account
      #     k8s-url: https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443
      #     k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
-       
-     
-     #- name: Deploying to Dev
-     #  uses: azure/k8s-deploy@v4 
-     #  with:
-     #     namespace: ag-dev
-     #    manifests: |
-     #    manifests/dev/deployment.yaml
-     #     manifests/dev/service.yaml
-     #     #kubernetes/ingress.yaml
-     #     images: |
-     #      $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+     ################################
             
   CD-Deploy_to_stagging:
     #if: github.ref == 'refs/heads/stagging'
@@ -227,17 +210,6 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG_ANDRES }}
           context: emea-aguisado-test
-       
-     #- name: Deploying to stagging
-     #  uses: azure/k8s-deploy@v4 
-     #  with:
-     #     namespace: stag
-     #     manifests: |
-     #        manifests/stag/deployment.yaml
-     #        manifests/stag/service.yaml
-     #     #kubernetes/ingress.yaml
-     #    images: |
-     #        $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
             
 #https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions
 #https://nicwortel.nl/blog/2020/simple-kubernetes-deployment-versioning
