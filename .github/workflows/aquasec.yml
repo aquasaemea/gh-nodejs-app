@@ -182,15 +182,8 @@ jobs:
         run: |
           export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
           sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
-          kubectl apply -f 
-          kubectl apply -f manifests/dev/service.yaml
-      #    kubectl config set-cluster emea-aguisado-aks01 --server="${K8S_SERVER}"
-      #    kubectl config set clusters.emea-aguisado-aks01.certificate-authority-data ${K8S_CERTIFICATE_AUTHORITY_DATA}
-      #    kubectl config set-credentials clusterAdmin_emea-uk-aguisado-01_emea-aguisado-aks01 --token="${K8S_TOKEN}"
-      #    kubectl config set-context default --cluster=emea-aguisado-aks01 --user=clusterAdmin_emea-uk-aguisado-01_emea-aguisado-aks01
-      #    kubectl config use-context default
-      #    
-      #- sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" deployment.yaml
+          kubectl apply -f -
+          kubectl apply -f ./manifests/dev/service.yaml
           
      #https://github.com/marketplace/actions/kubernetes-set-context     
      #- name: Setting K8s context
