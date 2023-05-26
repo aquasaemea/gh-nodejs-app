@@ -2,10 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: saemea-app
-  namespace: dev
+  namespace: tosino
   labels:
     app: saemea-app
-    env: dev
+    env: tosino
 spec:
   selector:
     matchLabels:
