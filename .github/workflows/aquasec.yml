@@ -56,22 +56,7 @@ jobs:
           aqua-secret: ${{ secrets.AQUA_SECRET }}
   
       - name: Build application
-        run: echo Application has been succesfully built 
-        
-      #https://github.com/marketplace/actions/build-and-push-docker-images
-      #https://docs.docker.com/build/ci/github-actions/test-before-push/
-      #- name: Set up Docker Buildx
-      #  uses: docker/setup-buildx-action@v2
-      #- name: Build and push the Docker image
-      #  uses: docker/build-push-action@v4
-      #  with:
-      #    tags: |
-      #      $DOCKER_REPOSITORY/$IMAGE_NAME:latest
-      #      $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
-      #    push: true
-      #    #cache-from: type=gha
-      #    #cache-to: type=gha,mode=max
-          
+        run: echo Application has been succesfully built   
           
       - name: Build image container
         run: |
@@ -148,46 +133,21 @@ jobs:
            method: kubeconfig
            kubeconfig: ${{ secrets.KUBECONFIG_ANDRES }}
            context: emea-aguisado-test
-              
+           
       - name: Deploying to Dev
-        run: |
-          export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
-          sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
-          kubectl apply -f -
-          kubectl apply -f ./manifests/dev/service.yaml
-      
-      #### TESTING ############
+        uses: Azure/k8s-artifact-substitute@v1
+        with:
+           images: 'docker.io/aquasaemea/saemea-app:${{ github.run_number }}'
+           manifests: |
+              manifests/dev/deployment.yaml
+              manifests/dev/service.yaml           
+     
       #- name: Deploying to Dev
-      #  uses: Azure/k8s-artifact-substitute@v1
-      #  with:
-      #    manifests: |
-      #       manifests/dev/deployment.yaml
-      #       manifests/dev/service.yaml
-      #    images: |
-      #      "docker.io/aquasaemea/saemea-app:${{ github.run_number }}"
-            
-      #- name: Deploying to Dev
-      #  uses: azure/k8s-deploy@v4 
-      #  with:
-      #     namespace: dev
-      #     images: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}' 
-      #     manifests: |
-      #        manifests/dev/deployment.yaml
-      #        manifests/dev/service.yaml
-          #kubernetes/ingress.yaml
-          #'docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:${{ github.run_number }}'
-          #docker.io/aquasaemea/insecure-bank-andres:${{ github.run_number }}
-          #docker.io/aquasaemea/insecure-bank-andres:latest
-          #docker.io/aquasaemea/insecure-bank-andres:90
-          #docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG  
-     #https://github.com/marketplace/actions/kubernetes-set-context     
-     #- name: Setting K8s context
-     #  uses: azure/k8s-set-context@v3
-     #  with:
-     #     method: service-account
-     #     k8s-url: https://emea-aguisado-test-dns-f0e6f17b.hcp.westeurope.azmk8s.io:443
-     #     k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
-     ################################
+      #  run: |
+      #    export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
+      #    sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
+      #    kubectl apply -f -
+      #    kubectl apply -f ./manifests/dev/service.yaml
             
   CD-Deploy_to_stagging:
     #if: github.ref == 'refs/heads/stagging'
