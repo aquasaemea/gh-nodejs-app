@@ -12,6 +12,7 @@ env:
    DOCKER_REPOSITORY: aquasaemea # name of Docker Hub ID
    IMAGE_NAME: saemea-app
    IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
+   NAMESPACE: dev
 
 jobs:
   CI-Code:
@@ -137,7 +138,8 @@ jobs:
       - name: Deploying to Dev
         uses: azure/k8s-deploy@v4 
         with:
-           images: 'docker.io/aquasaemea/saemea-app:${{ github.run_number }}'
+           namespace: '$NAMESPACE'
+           images: 'docker.io/$DOCKER_REPOSITORY/IMAGE_NAME:${{ github.run_number }}'
            manifests: |
               manifests/dev/deployment.yaml
               manifests/dev/service.yaml           
