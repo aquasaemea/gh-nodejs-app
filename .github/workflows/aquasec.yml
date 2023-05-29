@@ -138,7 +138,7 @@ jobs:
       - name: Deploying to Dev
         uses: azure/k8s-deploy@v4 
         with:
-           namespace: '$NAMESPACE'
+           namespace: $NAMESPACE
            images: 'docker.io/$DOCKER_REPOSITORY/IMAGE_NAME:${{ github.run_number }}'
            manifests: |
               manifests/dev/deployment.yaml
