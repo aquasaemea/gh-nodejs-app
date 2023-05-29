@@ -12,7 +12,6 @@ env:
    DOCKER_REPOSITORY: aquasaemea # name of Docker Hub ID
    IMAGE_NAME: saemea-app
    IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
-   NAMESPACE: dev
 
 jobs:
   CI-Code:
@@ -135,21 +134,21 @@ jobs:
            kubeconfig: ${{ secrets.KUBECONFIG_ANDRES }}
            context: emea-aguisado-test
            
-      - name: Deploying to Dev
-        uses: azure/k8s-deploy@v4 
-        with:
-           namespace: "$NAMESPACE"
-           images: 'docker.io/$DOCKER_REPOSITORY/IMAGE_NAME:${{ github.run_number }}'
-           manifests: |
-              manifests/dev/deployment.yaml
-              manifests/dev/service.yaml           
-     
       #- name: Deploying to Dev
-      #  run: |
-      #    export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
-      #    sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
-      #    kubectl apply -f -
-      #    kubectl apply -f ./manifests/dev/service.yaml
+      #  uses: azure/k8s-deploy@v4 
+      #  with:
+      #     namespace: dev
+      #     images: 'docker.io/aquasaemea/saemea-app:${{ github.run_number }}'
+      #     manifests: |
+      #        manifests/dev/deployment.yaml
+      #        manifests/dev/service.yaml           
+     
+      - name: Deploying to Dev
+        run: |
+          export IMAGE_CONTAINER="docker.io/$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
+          sed -e "s#{{ IMAGE_CONTAINER }}#$IMAGE_CONTAINER#g" "./manifests/dev/deployment.yaml" |
+          kubectl apply -f -
+          kubectl apply -f ./manifests/dev/service.yaml
             
   CD-Deploy_to_stagging:
     #if: github.ref == 'refs/heads/stagging'
