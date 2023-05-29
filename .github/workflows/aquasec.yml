@@ -135,7 +135,7 @@ jobs:
            context: emea-aguisado-test
            
       - name: Deploying to Dev
-        uses: Azure/k8s-artifact-substitute@v1
+        uses: azure/k8s-deploy@v4 
         with:
            images: 'docker.io/aquasaemea/saemea-app:${{ github.run_number }}'
            manifests: |
