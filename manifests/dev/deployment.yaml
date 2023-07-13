@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: saemea-app
+  name: gh-saemea-app
   namespace: dev
   labels:
-    app: saemea-app
+    app: gh-saemea-app
     env: dev
 spec:
   selector:
     matchLabels:
-      app: saemea-app
+      app: gh-saemea-app
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,12 +19,12 @@ spec:
   template:
     metadata:
       labels:
-        app: saemea-app
+        app: gh-saemea-app
     spec:
       containers:
-      - name: saemea-app
+      - name: gh-saemea-app
         image: {{ IMAGE_CONTAINER }}
-        #image: docker.io/aquasaemea/saemea-app:latest
+        #image: docker.io/aquasaemea/gh-saemea-app:latest
         imagePullPolicy: Always
         ports:
         - name: http
