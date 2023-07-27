@@ -27,7 +27,7 @@ jobs:
           aqua-key: ${{ secrets.AQUA_KEY }}
           aqua-secret: ${{ secrets.AQUA_SECRET }}
           
-      - name: Aqua code scanning(SCA,IaC and SAST)
+      - name: Aqua code scanning(SCA, Sensitive data, IaC, SAST, pipeline file, initial SBOM)
         uses: docker://aquasec/aqua-scanner
         with:
           args: trivy fs --scanners config,vuln,secret --sast --reachability --package-json .
