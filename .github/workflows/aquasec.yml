@@ -1,4 +1,4 @@
-name: GH SAEMEA APP 
+name: GH SAEMEA NODEJS APP 
 on:
   push:
     branches:
