@@ -1,4 +1,4 @@
-name: GH SAEMEA NODEJS APP 
+name: GH NODEJS APP 
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ on:
       
 env:
    DOCKER_REPOSITORY: aquasaemea # name of Docker Hub ID
-   IMAGE_NAME: gh-saemea-app
+   IMAGE_NAME: gh-nodejs-app
    IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
 
 jobs:
