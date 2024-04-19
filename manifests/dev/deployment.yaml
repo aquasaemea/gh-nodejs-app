@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gh-nodejs-app2
+  name: gh-nodejs-app
   namespace: dev
   labels:
-    app: gh-nodejs-app2
+    app: gh-nodejs-app
     env: dev
 spec:
   selector:
     matchLabels:
-      app: gh-nodejs-app2
+      app: gh-nodejs-app
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        app: gh-nodejs-app2
+        app: gh-nodejs-app
     spec:
       containers:
       - name: gh-nodejs-app2
