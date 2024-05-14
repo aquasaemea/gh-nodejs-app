@@ -1259,7 +1259,7 @@
                   {{ escapeXML .Target }}
 
                   </label>
-                  <span class="flex1 data-item">{{ escapeXML .Type }}</span>
+                  <span class="flex1 data-item">{{ toString .Type | escapeXML }}</span>
                   <span class="flex1 data-item">{{ toString .Class }}</span>
                   <div class="more-info px10">
                   <table>
@@ -1359,7 +1359,7 @@
                   {{ escapeXML .Target }}
 
                   </label>
-                  <span class="flex1 data-item">{{ escapeXML .Type }}</span>
+                  <span class="flex1 data-item">{{ toString .Type | escapeXML }}</span>
                   <span class="flex1 data-item">{{ toString .Class }}</span>
                   <div class="more-info px10">
                   <table>
@@ -1374,7 +1374,7 @@
                       <tbody>
                       {{- range .Misconfigurations }}
                       <tr>
-                          <td class="misconf-type">{{ escapeXML .Type }}</td>
+                          <td class="misconf-type">{{ toString .Type | escapeXML }}</td>
                           <td>{{ escapeXML .ID }}</td>
                           <td class="misconf-check">{{ escapeXML .Title }}</td>
                           <td><span class="severity {{ lower (escapeXML .Severity) }}">{{ escapeXML
@@ -1460,7 +1460,7 @@
                   {{ escapeXML .Target }}
 
                   </label>
-                  <span class="flex1 data-item">{{ escapeXML .Type }}</span>
+                  <span class="flex1 data-item">{{ toString .Type | escapeXML }}</span>
                   <span class="flex1 data-item">{{ toString .Class }}</span>
                   <div class="more-info px10">
                   <table>
