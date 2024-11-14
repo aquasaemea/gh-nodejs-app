@@ -12,6 +12,7 @@ env:
    DOCKER_REPOSITORY: aquasaemea # name of Docker Hub ID
    IMAGE_NAME: gh-nodejs-app
    IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
+#test1
 
 jobs:
   CI-Code:
